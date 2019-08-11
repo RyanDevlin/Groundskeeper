@@ -1,6 +1,9 @@
 # Project specific
 config.json
 
+# Mac Crap
+.DS_Store
+
 # Django #
 *.log
 *.pot
