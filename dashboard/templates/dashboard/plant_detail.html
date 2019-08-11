@@ -1,0 +1,43 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block page_content %}
+<div class="card mb-4 mx-auto" id="details">
+    <h1>{{ plant.name }} Metadata</h1>
+    <div class="row">
+        <div class="col-md-8">
+            <img src="{% static 'dashboard/images/plant.png' %}" alt="" width="100%">
+        </div>
+        <div class="col-md-4">
+            <h5>Plant Settings:</h5>
+            <br>
+            <p>Type: <span style="color:#00cfb1;">{{ plant.ptype }}</span></p>
+            <p>Location: <span style="color:#00cfb1;">{{ plant.location }}</span></p>
+            {% if plant.has_schedule %}
+                <p>Next scheduled water: <span style="color:#00cfb1;">{{ plant.schedule }}</span></p>
+            {% else %}
+                <p>Next scheduled water: <span style="color:#00cfb1;">No Schedule Set</span></p>
+            {% endif %}
+            <p>Watering duration: <span style="color:#00cfb1;">{{ plant.wtime }}</span></p>
+            <br>
+            <br>
+            <form action="{% url 'water' plant.pk %}" id="water-form" method="get">
+                {% csrf_token %}
+                <div class="water-button-holder">
+                    <button type="submit" class="button is-primary" id="water-button">Water Now!</button>
+                </div>
+            </form>
+            <br>
+            <br>
+            <form action="{% url 'delete' plant.pk %}" id="delete-form" method="get">
+                {% csrf_token %}
+                <div class="delete-button-holder">
+                    <button type="submit" class="button is-primary" id="delete-button">Delete</button>
+                </div>
+            </form>
+            <br>
+        </div>
+    </div>
+    <a href="{% url 'dash_index' %}" id="stretched-link-detail"></a>
+</div>
+{% endblock %}

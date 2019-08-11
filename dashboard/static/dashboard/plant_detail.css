@@ -1,0 +1,76 @@
+#details { 
+	margin-top: 2.8em;
+	background: white;
+	padding: 1em;
+	border-style: solid;
+	border-color: white;
+	border-radius: 1em;
+}
+
+#stretched-link-detail::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: auto;
+    content: "";
+    background-color: rgba(0,0,0,0);
+}
+
+#delete-button {
+	position: absolute;
+    z-index: 10;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+	color: white;
+	background-color: #f5787e;
+	font-size: 1em;
+	font-weight: 700;
+	border-style: solid;
+	border-color: #f5787e;
+	border-radius: 1em;
+	width: 5em;
+}
+
+#delete-button:hover {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+}
+
+#water-button {
+	position: absolute;
+    z-index: 11;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+	color: white;
+	background-color: #00cfb1;
+	font-size: 1em;
+	font-weight: 700;
+	border-style: solid;
+	border-color: #00cfb1;
+	border-radius: 2em;
+	width: 9em;
+	height: 3em;
+	top: -1em;
+}
+
+#water-button:hover {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+}
+
+.delete-button-holder {
+	position: relative;
+	width: 100%;
+	left: -2.5em;
+	text-align: center;
+	height: 100%;
+}
+
+.water-button-holder {
+	position: relative;
+	width: 100%;
+	left: -4.5em;
+	text-align: center;
+	height: 100%;
+}

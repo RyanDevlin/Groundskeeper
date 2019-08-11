@@ -1,0 +1,104 @@
+#top-buffer { 
+	margin-top: 2.8em;
+}
+
+#stretched-link::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: auto;
+    content: "";
+    background-color: rgba(0,0,0,0);
+}
+
+/*.card.mb-4:hover {
+	border: solid;
+	border-color: red;
+	z-index:10;
+	position: relative;
+}*/
+.card.mb-4:hover {
+	box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.4), 0 8px 22px 0 rgba(0, 0, 0, 0.4) !important;
+}
+.card.mb-4 {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+}
+
+.card.mb-4.main {
+	height: 10em;
+}
+
+.circle:before {
+	content: ' \25CF';
+	font-size: 6em;
+	color: #00cfb1;
+}
+
+.circle {
+	display:table-cell;
+	vertical-align: middle;
+	position:absolute;
+	width: 100%;
+	z-index: 4;
+	color: #00cfb1;
+}
+
+#add-card-circle {
+	position:relative;
+	height: 100%;
+	width: 100%;
+	display:table;
+	text-align: center;
+	z-index: 4;
+}
+
+#add-card-line {
+	position:absolute;
+	display:table;
+	text-align: center;
+	z-index: 200;
+	height: 0;
+	border-bottom: 0.5em solid white;
+	margin: 0 auto;
+    width: 10%;
+    left: 45%;
+    top: 45%;
+}
+
+
+#add-card-container {
+	text-align: center;
+	z-index: 1;
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.card-line-vert {
+	transform: rotate(90deg);
+}
+
+#stretched-link-final::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 400;
+    pointer-events: auto;
+    content: "";
+    background-color: rgba(0,0,0,0);
+}
+
+.water-level {
+	position: relative;
+	border-bottom: 0.8em solid #00cfb1;
+    width: 1%;
+    bottom: 0.6em;
+    left: 0.1em;
+}
+
+

@@ -1,0 +1,18 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+	<head>
+		<!-- Required meta tags -->
+	    <meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<!-- My stylesheets -->
+		<link rel="stylesheet" href="{% static 'groundskeeper/login.css' %}?{% now 'U' %}" type="text/css">
+
+	</head>
+  	<body id="index">
+		<div id="login">
+		    {% block page_content %}{% endblock %}
+		</div>
+	</body>
+</html>
