@@ -20,6 +20,8 @@ This project is not currently complete and therefore relies on a number of assum
 * [Python](https://www.python.org/) - Used as the backend scripts and web server
 * [Django](https://www.djangoproject.com/) - Used as the framework for the web server
 * [FusionCharts](https://www.fusioncharts.com/) - Used as the framework for displaying data in the web server
+* [Celery](https://docs.celeryproject.org/en/latest/#) - Used to multithread the alerts backend
+* [RabbitMQ](https://www.rabbitmq.com/) - Used as the message broker for Celery
 
 ## Authors
 
