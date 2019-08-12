@@ -48,7 +48,7 @@ def plant_detail(request, pk):
 	plants = garden.plant_set.all() # Pull up the requested plant data
 	plant = get_object_or_404(plants, pk=pk)
 
-	column2D = chart_backend(plant)
+	column2D = plant.chart_constructor()
 	if(column2D == None):
 		raise ValueError('Incorrect useage of chart_backend() in plant_detail in views.py')
 

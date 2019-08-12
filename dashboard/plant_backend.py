@@ -1,17 +1,15 @@
 from random import randint
 from datetime import datetime
-from dashboard.models import Plant
 from collections import OrderedDict
+import json
+from urllib import request, parse
+from celery import shared_task
 
 # Include the `fusioncharts.py` file that contains functions to embed the charts.
 from dashboard.fusioncharts import FusionCharts
 
 
 def chart_backend(plant):
-	if(not isinstance(plant, Plant)):
-		print("ERROR chart_backend: This function only instakes objects of type Plant as defined in the dashboard models.")
-		return None
-
 	#Chart data is passed to the `dataSource` parameter, like a dictionary in the form of key-value pairs.
 	dataSource = OrderedDict()
 
@@ -54,4 +52,26 @@ def chart_backend(plant):
 	# Create an object for the column 2D chart using the FusionCharts class constructor
 	# The chart data is passed to the `dataSource` parameter.
 	return FusionCharts("spline", "myFirstChart", "100%", "100%", "myFirstchart-container", "json", dataSource)
+
+# Use the shared_task decorator here to allow celery to run this task in the background
+@shared_task
+def alert_send(message):
+		# Configuration data read from config.json, this file is set up during install
+		with open("config.json", "r") as file:
+			data = json.load(file)
+
+			app_key = data["app_key"] # This is the app key for the Pushed iOS app
+			app_secret = data["app_secret"] # This is the app secret for the Pushed iOS app
+
+		data = {'app_key': app_key, 'app_secret': app_secret, 'target_type': 'app', 'content': message}
+		payload = parse.urlencode(data).encode()
+
+		#print("Sending....")
+		# Push the message out to the phone
+		req = request.Request('https://api.pushed.co/1/push', data=payload)
+		# This response processing needs to be here for some reason.
+		# I think it has something to do with the asynchronisity of
+		# this code versus the synchronisity of web responses
+		resp = request.urlopen(req).read()
+		#print(resp)
 

@@ -4,6 +4,7 @@ from random import randint
 from dateutil import tz
 from urllib import request, parse
 import json
+from dashboard.plant_backend import alert_send, chart_backend
 
 class Garden(models.Model):
 	garden_name = models.CharField(max_length=100)
@@ -35,26 +36,6 @@ class Plant(models.Model):
 	def __str__(self):
 		return self.name + " the " + self.ptype + " located in the " + self.location
 
-	def alert_send(self, message):
-		# Configuration data read from config.json, this file is set up during install
-		with open("config.json", "r") as file:
-			data = json.load(file)
-
-			app_key = data["app_key"] # This is the app key for the Pushed iOS app
-			app_secret = data["app_secret"] # This is the app secret for the Pushed iOS app
-
-		data = {'app_key': app_key, 'app_secret': app_secret, 'target_type': 'app', 'content': message}
-		payload = parse.urlencode(data).encode()
-
-		#print("Sending....")
-		# Push the message out to the phone
-		req = request.Request('https://api.pushed.co/1/push', data=payload)
-		# This response processing needs to be here for some reason.
-		# I think it has something to do with the asynchronisity of
-		# this code versus the synchronisity of web responses
-		resp = request.urlopen(req).read()
-		#print(resp)
-
 	#########################################################################
 	# This method intakes a type of alert and pushes the alert to my iPhone.
 	#########################################################################
@@ -66,7 +47,7 @@ class Plant(models.Model):
 					message = self.name + ' the ' + self.ptype + ' in the ' + self.location + ' has a low water reservoir!'
 				except:
 					message = self.name + ' has a low water reservoir!'
-				self.alert_send(message)
+				alert_send.delay(message)
 			else:
 				print("push_alert: Fill notifications are off.")
 		elif(type == "watering"):
@@ -76,7 +57,7 @@ class Plant(models.Model):
 					message = self.name + ' the ' + self.ptype + ' in the ' + self.location + ' is being watered now.'
 				except:
 					message = self.name + ' is being watered now.'
-				self.alert_send(message)
+				alert_send.delay(message)
 			else:
 				print("push_alert: Watering notifications are off.")
 
@@ -86,7 +67,7 @@ class Plant(models.Model):
 				message = self.name + ' the ' + self.ptype + ' in the ' + self.location + ' does not need to be watered today.'
 			except:
 				message = self.name + ' does not need to be watered today.'
-			self.alert_send(message)
+			alert_send.delay(message)
 		else:
 			print("ERROR push_alert: Unrecognized alert type in push_alert method.")
 			print("    Type supplied: " + type)
@@ -109,33 +90,14 @@ class Plant(models.Model):
 		self.save()
 
 	def water(self):
-		"""
-		if(not self.linked):
-			print("ERROR water: Plant not linked!")
-
-		else:
-			# Water the plant
-			"""
-
-		"""
-		# Auto-detect zones:
-		from_zone = tz.tzutc()
-		to_zone = tz.tzlocal()
-
-		utc = datetime.datetime.utcnow()
-
-		# Tell the datetime object that it's in UTC time zone since 
-		# datetime objects are 'naive' by default
-		utc = utc.replace(tzinfo=from_zone)
-		"""
-
-		# Convert time zone
-		#self.prev_water = utc.astimezone(to_zone)
+		# Check for linkage here
 		self.push_alert("watering")
 		self.prev_water = datetime.datetime.now()
 		self.wonce = True
 		self.save()
 
+	def chart_constructor(self):
+		return chart_backend(self)
 
 
 

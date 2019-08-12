@@ -79,6 +79,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'groundskeeper.wsgi.application'
+CELERY_BROKER_URL = 'amqp://localhost'
 
 
 # Database

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+rabbitmq-server &
+celery -A groundskeeper worker -l info &
+python3 manage.py runserver
