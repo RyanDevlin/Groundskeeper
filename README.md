@@ -4,7 +4,7 @@
 </p>
 
 <p align="center">
-    <img src="https://lh3.googleusercontent.com/ySeIDGiyt16lE3YcWlBovOwys95JmM7jOcYWc7HdXuysO0bFb_nhStyq9ehvhKJbmQ3y3AlRJr0yTWjcFlK27jkPJtyqnhBGNiVENIMTIIB9BaVjaBHXjhxpq0MLY14WxWlDtojzGuk" alt="Master Private Key Embedded" width="400"/>
+    <img src="https://github.com/RyanDevlin/Groundskeeper/blob/master/groundskeeper_logo.png" alt="Master Private Key Embedded" width="100"/>
 </p>
 
 ## What is this?
