@@ -2,7 +2,7 @@
 <p align="center">
   <b>A webserver and backend codebase for fully automating the care of house plants</b><br>
 </p>
-
+<br>
 <p align="center">
     <img src="https://github.com/RyanDevlin/Groundskeeper/blob/master/groundskeeper_logo.png" alt="Master Private Key Embedded" width="100"/>
 </p>
