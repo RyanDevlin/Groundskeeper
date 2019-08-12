@@ -1,7 +1,7 @@
 #details { 
 	margin-top: 2.8em;
 	background: white;
-	padding: 1em;
+	padding: 1.5em;
 	border-style: solid;
 	border-color: white;
 	border-radius: 1em;
@@ -96,7 +96,7 @@
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
 }
 
-.hover-shadow {
+#hover-shadow {
 	padding: 1.4em;
 	position: relative;
     border-radius: 4px;
