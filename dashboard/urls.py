@@ -10,4 +10,5 @@ urlpatterns = [
 	path('<int:pk>/delete/', views.plant_delete, name='delete'),
 	path('<int:pk>/water/', views.plant_water, name='water'),
 	path('<int:pk>/settings/', views.settings_page, name='settings_page'),
+	path('<int:gpk>/plant/<int:ppk>/settings/', views.plant_settings, name='plant_settings'),
 ]

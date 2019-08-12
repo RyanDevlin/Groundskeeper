@@ -30,7 +30,7 @@ SECRET_KEY = django_key
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.1.7', '127.0.0.1']
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'dashboard'

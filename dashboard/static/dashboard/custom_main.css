@@ -29,6 +29,10 @@ body::before {
 	background-color: rgba(0,0,0,0);
 }
 
+#nav-bar-contol {
+	height: 12%;
+}
+
 #nav_title {
 	font-family: 'Montserrat', sans-serif;
 	color: #1e2a4a;

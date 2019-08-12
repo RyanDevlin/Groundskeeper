@@ -10,7 +10,7 @@ from django import forms
 from django.urls import reverse
 from dashboard.plant_backend import chart_backend
 
-from .forms import PlantForm, SettingsForm
+from .forms import PlantForm, SettingsForm, PlantSettingsForm
 from django.contrib.auth.decorators import login_required
 
 from collections import OrderedDict
@@ -76,7 +76,7 @@ def plant_add(request, gname):
 			t_fnotif = form.cleaned_data['fnotif']
 			t_wnotif = form.cleaned_data['wnotif']
 			#settings.TIME_ZONE
-			g.plant_set.create(name=t_name, ptype=t_type, location=t_loc, fnotif=t_fnotif, wnotif=t_wnotif, prev_water=datetime.now())
+			g.plant_set.create(name=t_name, ptype=t_type, location=t_loc, fnotif=t_fnotif, wnotif=t_wnotif, schedule=datetime.now(), prev_water=datetime.now())
 
 			# redirect to a new URL:
 			return HttpResponseRedirect(reverse('dash_index')) # Bring us back to the main page
@@ -136,5 +136,37 @@ def settings_page(request, pk):
 		'garden': garden
 	}
 	return render(request, 'dashboard/settings_page.html', context)
+
+@login_required()
+def plant_settings(request, gpk, ppk):
+	# if this is a POST request we need to process the form data
+	if request.method == 'POST':
+		# create a form instance and populate it with data from the request:
+		garden = get_object_or_404(Garden, pk=gpk)
+		plant = get_object_or_404(Plant, pk=ppk)
+		form = PlantSettingsForm(request.POST, instance=plant)
+		form.as_ul()
+		# check whether it's valid:
+		if form.is_valid():
+			form.save()
+
+			# redirect to a new URL:
+			return HttpResponseRedirect(reverse('plant_detail', kwargs={'pk':ppk})) # Bring us back to the plant details page
+
+	# if a GET (or any other method) we'll create a blank form
+	else:
+		garden = get_object_or_404(Garden, pk=gpk)
+		plant = get_object_or_404(Plant, pk=ppk)
+		form = PlantSettingsForm(instance=plant)
+		form.as_ul()
+
+	garden = get_object_or_404(Garden, pk=gpk)
+	plant = get_object_or_404(Plant, pk=ppk)
+	context = {
+		'form': form,
+		'garden': garden,
+		'plant': plant
+	}
+	return render(request, 'dashboard/plant_settings.html', context)
 
 

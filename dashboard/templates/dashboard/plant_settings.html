@@ -1,0 +1,24 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block page_content %}
+<div class="card mb-4 mx-auto" id="card-add">
+    <!--<h1>{{ garden.garden_name }}</h1>-->
+    <h1>Plant Settings</h1>
+
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    <form action="{% url 'plant_settings' garden.pk plant.pk %}" method="post">
+        {% csrf_token %}
+
+        {% include 'include/form_general.html' with form=form %}
+        <br>
+        <div class="submit-button-holder">
+            <button type="submit" class="button is-primary" id="submit-button">Save</button>
+        </div>
+        <br>
+        <br>
+    </form>
+</div>
+{% endblock %}

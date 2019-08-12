@@ -24,7 +24,7 @@ class Plant(models.Model):
 	wlow = models.IntegerField(default=20) # The level at which the water in the container is considered low
 	wtime = models.DurationField(default=datetime.timedelta(minutes=2)) # How long to water the plant for (eg. 1 min. of running the pump)
 	has_schedule = models.BooleanField(default=False) # This lets us know if this plant currently has a schedule set
-	schedule = models.CharField(max_length=100) # This is the cron string used in setting the cron job for this plant
+	schedule = models.DateTimeField('Scheduled watering time') # This is the cron string used in setting the cron job for this plant
 	fnotif = models.BooleanField('Low Reservoir Notifications', default=True) # Notification enable for when the water reservior needs to be refilled
 	wnotif = models.BooleanField('Watering Notifications', default=True) # Notification enable for when the plant is watered
 	prev_water = models.DateTimeField('Last watered') # The last time the plant was watered
