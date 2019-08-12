@@ -18,7 +18,7 @@ class Plant(models.Model):
 	name = models.CharField(max_length=100) # A unique identifier for the plant, for instance: Oscar
 	ptype = models.CharField(max_length=100) # Type of the plant(eg. snake_plant)
 	location = models.CharField(max_length=100) # Location of the plant (bedroom, livingroom, etc.)
-	moisture = models.IntegerField(default=100) # Current moisture reading for the plant
+	moisture = models.CharField(max_length=100, default="098;094;092;090;082;080;064;060;098;094;092;090;082;080;064;060;098;094;092;090;082;080;064;060") # Past 24 hours of moisture readings for the plant
 	wlevel = models.IntegerField(default=100) # Current water level reading of the plant's reservoir
 	wlow = models.IntegerField(default=20) # The level at which the water in the container is considered low
 	wtime = models.DurationField(default=datetime.timedelta(minutes=2)) # How long to water the plant for (eg. 1 min. of running the pump)
@@ -95,7 +95,6 @@ class Plant(models.Model):
 	def probe(self):
 		# Get the current water level and moisture reading for the plant
 		self.wlevel = randint(0, 100)
-		self.moisture = randint(0, 100)
 
 		# Check if the plant was watered today
 		if(self.prev_water.date() == datetime.datetime.utcnow().date()): # For some inane reason I don't feel like figuring out, I need to keep the current datetime in utc becasue the prev_water time is in utc so to compare them they must be the same. No clue why prev_water is working that way, but who cares? [famous last words]

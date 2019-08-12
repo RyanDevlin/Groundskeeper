@@ -2,7 +2,7 @@ from django import forms
 from dashboard.models import Garden, Plant
 
 class PlantForm(forms.Form):
-	name = forms.CharField(label='Plant name (eg. Carlito)', max_length=100)
+	name = forms.CharField(label='Plant name (eg. Carlitos)', max_length=100)
 	ptype = forms.CharField(label='Plant type (eg. Snake Plant)', max_length=100)
 	location = forms.CharField(label='Plant location (eg. kitchen)', max_length=100)
 	fnotif = forms.BooleanField(label='Notifications when the water reservoir is low', initial=True, required=False) # Notification enable for when the water reservior needs to be refilled

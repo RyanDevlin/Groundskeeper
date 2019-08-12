@@ -6,7 +6,10 @@
     <h1>{{ plant.name }} Metadata</h1>
     <div class="row">
         <div class="col-md-8">
+            <!--
             <img src="{% static 'dashboard/images/plant.png' %}" alt="" width="100%">
+            -->
+            <div id="myFirstchart-container">{{ output|safe }}</div>
         </div>
         <div class="col-md-4">
             <h5>Plant Settings:</h5>

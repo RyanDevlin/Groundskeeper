@@ -8,9 +8,15 @@ import pytz
 from django.conf import settings
 from django import forms
 from django.urls import reverse
+from dashboard.plant_backend import chart_backend
 
 from .forms import PlantForm, SettingsForm
 from django.contrib.auth.decorators import login_required
+
+from collections import OrderedDict
+
+# Include the `fusioncharts.py` file that contains functions to embed the charts.
+from dashboard.fusioncharts import FusionCharts
 
 # NOTE: Notice that the code here is hardcoded to only work with plants from the first garden
 # The ability to have multiple gardens is a feature to be added in the future
@@ -41,9 +47,15 @@ def plant_detail(request, pk):
 	garden =Garden.objects.get(garden_name="NYC Apartment")
 	plants = garden.plant_set.all() # Pull up the requested plant data
 	plant = get_object_or_404(plants, pk=pk)
+
+	column2D = chart_backend(plant)
+	if(column2D == None):
+		raise ValueError('Incorrect useage of chart_backend() in plant_detail in views.py')
+
 	context = {
 		'plant': plant,
-		'garden': garden
+		'garden': garden,
+		'output': column2D.render()
 	}
 	return render(request, 'dashboard/plant_detail.html', context)
 
@@ -124,4 +136,5 @@ def settings_page(request, pk):
 		'garden': garden
 	}
 	return render(request, 'dashboard/settings_page.html', context)
+
 

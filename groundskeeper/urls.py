@@ -18,11 +18,16 @@ from django.urls import include, path
 from dashboard import views
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
+import json
+
+with open("config.json", "r") as file:
+    data = json.load(file)
+    admin_url = data["admin_url"]
 
 urlpatterns = [
 	url(r'^login/$', auth_views.LoginView.as_view(), name='login'),
     url(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),
 	path('', views.dash_index, name='dashboard'),
 	path('dashboard/', include('dashboard.urls')),
-	path('admin/', admin.site.urls),
+	path(admin_url + '/', admin.site.urls),
 ]

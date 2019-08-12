@@ -74,3 +74,8 @@
 	text-align: center;
 	height: 100%;
 }
+
+.raphael-group-19-creditgroup{
+	fill-opacity: 0.0 !important;
+	display:none !important;
+}
