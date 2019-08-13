@@ -28,17 +28,27 @@ def chart_backend(plant):
 	# Pull up the plant moisture data
 	moisture = plant.moisture.split(";")
 	chartData = OrderedDict()
-	times = ["12:00am", "1:00am", "2:00am", "3:00am", "4:00am", "5:00am", "6:00am", "7:00am", "8:00am", "9:00am", "10:00am", "11:00am", "12:00pm", "1:00pm", "2:00pm", "3:00pm", "4:00pm", "5:00pm", "6:00pm", "7:00pm", "8:00pm", "9:00pm", "10:00pm", "11:00pm"]
+	times = ["12:00am", "1:00am", "2:00am", "3:00am",
+			 "4:00am", "5:00am", "6:00am", "7:00am",
+			 "8:00am", "9:00am", "10:00am", "11:00am",
+			 "12:00pm", "1:00pm", "2:00pm", "3:00pm",
+			 "4:00pm", "5:00pm", "6:00pm", "7:00pm",
+			 "8:00pm", "9:00pm", "10:00pm", "11:00pm"]
 	
-	i =0
+	i = 0
+	now = datetime.now()
 	for time in times:
-		chartData[time] = moisture[i]
+		print(i)
+		if(i > now.hour):
+			chartData[time] = None # This is for data that we dont have yet because it will be measured lated today
+		else:
+			chartData[time] = moisture[i]
 		i += 1
 
 	dataSource["chart"] = chartConfig
 	dataSource["data"] = []
 
-	# Convert the data in the `chartData`array into a format that can be consumed by FusionCharts.
+	# Convert the data in the `chartData` array into a format that can be consumed by FusionCharts.
 	#The data for the chart should be in an array wherein each element of the array
 	#is a JSON object# having the `label` and `value` as keys.
 

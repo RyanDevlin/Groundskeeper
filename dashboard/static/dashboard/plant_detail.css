@@ -59,7 +59,7 @@
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
 }
 
-.delete-button-holder {
+#delete-button-holder {
 	position: relative;
 	width: 100%;
 	left: -2.5em;
@@ -67,7 +67,7 @@
 	height: 100%;
 }
 
-.water-button-holder {
+#water-button-holder {
 	position: relative;
 	width: 100%;
 	left: -4.5em;
