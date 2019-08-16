@@ -38,7 +38,6 @@ def chart_backend(plant):
 	i = 0
 	now = datetime.now()
 	for time in times:
-		print(i)
 		if(i > now.hour):
 			chartData[time] = None # This is for data that we dont have yet because it will be measured lated today
 		else:

@@ -29,7 +29,7 @@
             <br>
             <form action="{% url 'water' plant.pk %}" id="water-form" method="get">
                 {% csrf_token %}
-                <div data-tilt data-reverse="true" data-scale="1.1" data-max="10" id="water-button-holder">
+                <div data-tilt data-reverse="true" data-scale="1.1" data-max="10" id="water-button-holder" data-disabled="x" data-disabled="y">
                     <button type="submit" class="button is-primary" id="water-button">Water Now!</button>
                 </div>
             </form>
@@ -37,7 +37,7 @@
             <br>
             <form action="{% url 'delete' plant.pk %}" id="delete-form" method="get">
                 {% csrf_token %}
-                <div data-tilt data-reverse="true" data-scale="1.1" data-max="10" id="delete-button-holder">
+                <div data-tilt data-reverse="true" data-scale="1.1" data-max="10" id="delete-button-holder" data-disabled="x" data-disabled="y">
                     <button type="submit" class="button is-primary" id="delete-button">Delete</button>
                 </div>
             </form>
