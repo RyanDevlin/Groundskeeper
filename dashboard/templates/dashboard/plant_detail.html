@@ -17,11 +17,7 @@
                 <br>
                 <p>Type: <span style="color:#00cfb1;">{{ plant.ptype }}</span></p>
                 <p>Location: <span style="color:#00cfb1;">{{ plant.location }}</span></p>
-                {% if plant.has_schedule %}
-                    <p>Next scheduled water: <span style="color:#00cfb1;">{{ plant.schedule }}</span></p>
-                {% else %}
-                    <p>Next scheduled water: <span style="color:#00cfb1;">No Schedule Set</span></p>
-                {% endif %}
+                <p>Watering schedule: <span style="color:#00cfb1;">Every {{ plant.get_schedule_freq_display }} at {{ plant.get_schedule_time_display }}</span></p>
                 <p>Watering duration: <span style="color:#00cfb1;">{{ plant.wtime }}</span></p>
                 <a href="{% url 'plant_settings' garden.pk  plant.pk %}" id="plant-settings"></a>
             </div>

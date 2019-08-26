@@ -73,11 +73,16 @@ def plant_add(request, gname):
 			t_name = form.cleaned_data['name']
 			t_type = form.cleaned_data['ptype']
 			t_loc = form.cleaned_data['location']
+			t_schedule_freq = form.cleaned_data['schedule_freq']
+			t_schedule_time = form.cleaned_data['schedule_time']
+			t_schedule_start = form.cleaned_data['schedule_start']
 			t_fnotif = form.cleaned_data['fnotif']
 			t_wnotif = form.cleaned_data['wnotif']
 			#settings.TIME_ZONE
-			g.plant_set.create(name=t_name, ptype=t_type, location=t_loc, fnotif=t_fnotif, wnotif=t_wnotif, schedule=datetime.now(), prev_water=datetime.now())
-
+			g.plant_set.create(name=t_name, ptype=t_type, location=t_loc, schedule_freq=t_schedule_freq, schedule_time=t_schedule_time, schedule_start=t_schedule_start,  fnotif=t_fnotif, wnotif=t_wnotif, prev_water=datetime.now())
+			garden = Garden.objects.get(garden_name=gname)
+			plant = garden.plant_set.get(name=t_name)
+			plant.update_schedule()
 			# redirect to a new URL:
 			return HttpResponseRedirect(reverse('dash_index')) # Bring us back to the main page
 
@@ -98,6 +103,7 @@ def plant_delete(request, pk):
 	garden =Garden.objects.get(garden_name="NYC Apartment")
 	plants = garden.plant_set.all() # Pull up the requested plant data
 	plant = get_object_or_404(plants, pk=pk)
+	plant.delete_schedule()
 	plant.delete()
 	return HttpResponseRedirect(reverse('dash_index'))
 
@@ -149,6 +155,9 @@ def plant_settings(request, gpk, ppk):
 		# check whether it's valid:
 		if form.is_valid():
 			form.save()
+			garden = get_object_or_404(Garden, pk=gpk)
+			plant = get_object_or_404(Plant, pk=ppk)
+			plant.update_schedule()
 
 			# redirect to a new URL:
 			return HttpResponseRedirect(reverse('plant_detail', kwargs={'pk':ppk})) # Bring us back to the plant details page
