@@ -17,7 +17,13 @@
                 <br>
                 <p>Type: <span style="color:#00cfb1;">{{ plant.ptype }}</span></p>
                 <p>Location: <span style="color:#00cfb1;">{{ plant.location }}</span></p>
-                <p>Watering schedule: <span style="color:#00cfb1;">Every {{ plant.get_schedule_freq_display }} at {{ plant.get_schedule_time_display }}</span></p>
+                {% if plant.weekon %}
+                    <p>Watering schedule: <span style="color:#00cfb1;">Every {{ plant.get_schedule_freq_display }} at {{ plant.get_schedule_time_display }} on {{ plant.get_schedule_start_display }}</span></p>
+                {% elif plant.monthon %}
+                    <p>Watering schedule: <span style="color:#00cfb1;">Every month on day {{ plant.monthday }} at {{ plant.get_schedule_time_display }}</span></p>
+                {% else %}
+                    <p>Watering schedule: <span style="color:#00cfb1;">Every {{ plant.get_schedule_freq_display }} at {{ plant.get_schedule_time_display }}</span></p>
+                {% endif %}
                 <p>Watering duration: <span style="color:#00cfb1;">{{ plant.wtime }}</span></p>
                 <a href="{% url 'plant_settings' garden.pk  plant.pk %}" id="plant-settings"></a>
             </div>

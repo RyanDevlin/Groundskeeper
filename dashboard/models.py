@@ -12,8 +12,8 @@ from django.conf import settings
 FREQ = (  
     ('1', 'day'),
     ('2', 'other day'),
-    ('week', 'week'),
-    ('month', 'month from today'),
+    ('3', 'week'),
+    ('4', 'month from today'),
 )
 
 TIME = (  
@@ -105,6 +105,9 @@ class Plant(models.Model):
 	wtoday = models.BooleanField('Watered today', default=False)
 	wonce = models.BooleanField('Watered at least once', default=False)
 	redalert = models.BooleanField('Water is low', default=False) # Switch used for changing the color of the percentage bar on the card
+	weekon = models.BooleanField('True if watering once every week', default=False)
+	monthon = models.BooleanField('True if watering once every month', default=False)
+	monthday = models.IntegerField(default=1)
 
 	def __str__(self):
 		return self.name + " the " + self.ptype + " located in the " + self.location
@@ -181,7 +184,6 @@ class Plant(models.Model):
 			python3_path = data["python3_path"]
 
 		cron_string = self.create_cron_string()
-		print("CRON: " + cron_string)
 
 		if(self.has_schedule):
 			try:
@@ -232,11 +234,21 @@ class Plant(models.Model):
 
 	def create_cron_string(self):
 		now = timezone.now()
+
+		# Lazy way to circumvent leap year errors. Will fix later.
+		if(now.day > 28):
+			day = 28
+		else:
+			day = now.day
+
+		self.monthday = day
+		self.save()
+
 		select = {
 			'1': '* * *',
 			'2': '*/2 * *',
-			'week': '*/1 * ' + str(self.schedule_start),
-			'month': str(now.day) + ' */1 *'
+			'3': '*/1 * ' + str(self.schedule_start),
+			'4': str(day) + ' */1 *'
 		}
 
 		# Cron translations for the time

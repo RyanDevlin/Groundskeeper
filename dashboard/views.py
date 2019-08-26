@@ -78,8 +78,17 @@ def plant_add(request, gname):
 			t_schedule_start = form.cleaned_data['schedule_start']
 			t_fnotif = form.cleaned_data['fnotif']
 			t_wnotif = form.cleaned_data['wnotif']
-			#settings.TIME_ZONE
-			g.plant_set.create(name=t_name, ptype=t_type, location=t_loc, schedule_freq=t_schedule_freq, schedule_time=t_schedule_time, schedule_start=t_schedule_start,  fnotif=t_fnotif, wnotif=t_wnotif, prev_water=datetime.now())
+			
+			if(t_schedule_freq == '3'):
+				t_weekon = True
+				t_monthon = False
+			elif(t_schedule_freq == '4'):
+				t_weekon = False
+				t_monthon = True
+			else:
+				t_weekon = False
+				t_monthon = False
+			g.plant_set.create(name=t_name, ptype=t_type, location=t_loc, schedule_freq=t_schedule_freq, schedule_time=t_schedule_time, schedule_start=t_schedule_start,  fnotif=t_fnotif, wnotif=t_wnotif, prev_water=datetime.now(), weekon=t_weekon, monthon=t_monthon)
 			garden = Garden.objects.get(garden_name=gname)
 			plant = garden.plant_set.get(name=t_name)
 			plant.update_schedule()
@@ -157,6 +166,19 @@ def plant_settings(request, gpk, ppk):
 			form.save()
 			garden = get_object_or_404(Garden, pk=gpk)
 			plant = get_object_or_404(Plant, pk=ppk)
+
+			# Modify display vars
+			if(plant.schedule_freq == '3'):
+				plant.weekon = True
+				plant.monthon = False
+			elif(plant.schedule_freq == '4'):
+				plant.weekon = False
+				plant.monthon = True
+			else:
+				plant.weekon = False
+				plant.monthon = False
+
+			plant.save()
 			plant.update_schedule()
 
 			# redirect to a new URL:

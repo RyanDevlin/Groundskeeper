@@ -5,8 +5,8 @@ import datetime
 FREQ = (  
     ('1', 'day'),
     ('2', 'other day'),
-    ('week', 'week'),
-    ('month', 'month from today'),
+    ('3', 'week'),
+    ('4', 'month from today'),
 )
 
 TIME = (  
