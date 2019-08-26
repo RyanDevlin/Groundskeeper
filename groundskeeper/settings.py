@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-with open("config.json", "r") as file:
+with open(BASE_DIR + "/config.json", "r") as file:
     data = json.load(file)
     django_key = data["django_key"] # This is the secret key used by django
 

@@ -5,6 +5,7 @@ import json
 from urllib import request, parse
 from celery import shared_task
 from crontab import CronTab
+from django.conf import settings
 
 # Include the `fusioncharts.py` file that contains functions to embed the charts.
 from dashboard.fusioncharts import FusionCharts
@@ -67,7 +68,7 @@ def chart_backend(plant):
 @shared_task
 def alert_send(message):
 		# Configuration data read from config.json, this file is set up during install
-		with open("config.json", "r") as file:
+		with open(settings.BASE_DIR + "/config.json", "r") as file:
 			data = json.load(file)
 
 			app_key = data["app_key"] # This is the app key for the Pushed iOS app

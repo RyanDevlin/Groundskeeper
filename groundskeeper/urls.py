@@ -19,8 +19,9 @@ from dashboard import views
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 import json
+from django.conf import settings
 
-with open("config.json", "r") as file:
+with open(settings.BASE_DIR + "/config.json", "r") as file:
     data = json.load(file)
     admin_url = data["admin_url"]
 

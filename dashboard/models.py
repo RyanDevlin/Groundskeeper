@@ -7,6 +7,7 @@ import json
 from dashboard.plant_backend import alert_send, chart_backend
 from django.utils import timezone
 from crontab import CronTab
+from django.conf import settings
 
 FREQ = (  
     ('1', 'day'),
@@ -172,7 +173,7 @@ class Plant(models.Model):
 		return chart_backend(self)
 
 	def update_schedule(self):
-		with open("config.json", "r") as file:
+		with open(settings.BASE_DIR + "/config.json", "r") as file:
 			data = json.load(file)
 
 			user = data["user"] # Username for the machine running this code
@@ -204,6 +205,7 @@ class Plant(models.Model):
 				my_cron.write()
 				self.schedule = cron_string
 				self.has_schedule = True
+				self.save()
 			except:
 				print("ERROR set_schedule: Invalid cron value in set_schedule method")
 				exit()
@@ -211,7 +213,7 @@ class Plant(models.Model):
 	# This method deletes the schedule for the watering of the plant
 	#########################################################################
 	def delete_schedule(self):
-		with open("config.json", "r") as file:
+		with open(settings.BASE_DIR + "/config.json", "r") as file:
 			data = json.load(file)
 
 			user = data["user"] # Username for the machine running this code
